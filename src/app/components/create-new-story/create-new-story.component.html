@@ -1,0 +1,22 @@
+<div>
+  <mat-form-field>
+    <mat-label>Beginning of the story</mat-label>
+    <input matInput #newStory>
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field>
+    <mat-label>Number of round</mat-label>
+    <input matInput
+          type="number"
+           min="1"
+           max="10"
+           step="1"
+           value="3"
+          #nbRounds>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="{ firstMessage: newStory.value, nbRounds: nbRounds.value }">Start</button>
+</div>

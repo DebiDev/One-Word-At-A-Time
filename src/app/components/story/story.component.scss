@@ -1,0 +1,46 @@
+blockquote {
+  font-size: 22px;
+  min-height: 200px;
+  width: calc(100% - 20px);
+  display: inline-block;
+  line-height: 1.4;
+	position: relative;
+  margin: 0;
+  padding: 10px;
+  background: rgba(222, 222, 222, 0.4);
+  border-radius: 1em;
+}
+
+blockquote:before,
+blockquote:after {
+	position: absolute;
+	color: #673ab7;
+	font-size: 8rem;
+  display: inline-block;
+	width: 4rem;
+	height: 4rem;
+}
+
+blockquote:before {
+	content: '“';
+	left: -52px;
+  top: -50px;
+}
+
+blockquote:after {
+	content: '”';
+	right: -65px;
+  bottom: 0;
+}
+
+blockquote span:first-of-type::first-letter {
+  font-size: 40px;
+  text-transform: uppercase;
+  color: #673ab7;
+}
+
+span {
+  display: inline-block;
+  border-radius: 5px;
+  margin: 0 2px;
+}

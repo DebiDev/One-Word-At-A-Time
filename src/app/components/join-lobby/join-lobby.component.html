@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>Lobby Id</mat-label>
+  <input matInput #lobbyId>
+</mat-form-field>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="lobbyId.value">Join</button>
+</div>

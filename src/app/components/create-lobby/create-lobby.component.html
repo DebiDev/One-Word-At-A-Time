@@ -1,0 +1,11 @@
+<button *ngIf="!lobbyId" mat-button (click)="generateNewLobbyId()">Generate a new lobby</button>
+<div *ngIf="lobbyId">
+  <mat-form-field>
+    <mat-label>Lobby Id (share it with your friend</mat-label>
+    <input matInput #newLobby [(ngModel)]="lobbyId" readonly>
+  </mat-form-field>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="newLobby.value">Create</button>
+  </div>
+</div>

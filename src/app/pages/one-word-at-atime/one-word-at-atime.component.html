@@ -1,0 +1,86 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="true">
+  <mat-drawer #drawer mode="side">
+    <ul>
+      <li>
+        <button mat-button color="primary" (click)="joinLobby()">
+          Join a lobby
+        </button>
+      </li>
+      <li>
+        <button mat-button color="primary" (click)="createNewLobby()">
+          Create a lobby
+        </button>
+      </li>
+      <li *ngIf="(userData$ | async)?.lobbyId">
+        <button mat-button color="warn" (click)="quitLobby()">
+          Quit the lobby
+        </button>
+      </li>
+    </ul>
+  </mat-drawer>
+  <div class="game-interface">
+    <mat-toolbar>
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>One Word At A Time</span>
+      <div *ngIf="lobbyId" class="lobby-id">Lobby ID: {{lobbyId}}</div>
+    </mat-toolbar>
+    <div class="grid">
+      <div class="users">
+        <div class="game-header">
+          Lobby
+        </div>
+        <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+          <mat-chip *ngFor="let user of users$ | async; let ind = index"
+                    class="magictime vanishIn"
+                    [style.background-color]="userBackgroundColor[ind]"
+                    selected
+          >{{user.pseudo}}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+      <div class="story">
+        <div class="current-games">
+          <div class="game-header">
+            Current Game
+          </div>
+          <div
+            class="current-story"
+            *ngIf="(currentLobby$ | async)?.currentStory"
+          >
+            <div class="nb-messages">Number of messages: {{(storyInConstruction$ | async)?.story.length - 1}} / {{(storyInConstruction$ | async)?.nbMessagesMax}}</div>
+            <story [story]="storyInConstruction$ | async"></story>
+          </div>
+          <button class="new-game"
+                  mat-flat-button color="primary"
+                  *ngIf="(userData$ | async )?.isAdmin && !(currentLobby$ | async)?.currentStory"
+                  (click)="createNewStory()"
+          >New Game
+          </button>
+        </div>
+        <div class="previous-games top-shadow">
+          <div class="game-header">
+            Previous Games
+          </div>
+          <div
+            class="past-stories"
+            *ngIf="(currentLobby$ | async)?.storiesMade"
+          >
+            <story *ngFor="let pastStory of storiesMade" [story]="pastStory"></story>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="(userData$ | async)?.isPlaying" class="your-turn magictime puffIn">This is your turn !</div>
+  <input
+    class="main-input"
+    placeholder="Continue the story..."
+    matInput type="text" #mainInput
+    [disabled]="!(userData$ | async)?.isPlaying"
+    (keyup.enter)="enterNewWords(mainInput.value)"
+  >
+</mat-drawer-container>
+
+
